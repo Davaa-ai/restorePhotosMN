@@ -30,13 +30,13 @@ export default function Header({ photo }: { photo?: string | undefined }) {
             href='/'
             className='border-r border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex'
           >
-            <p className='font-medium text-base'>Home</p>
+            <p className='font-medium text-base'>Нүүр</p>
           </Link>
           <Link
             href='/restore'
             className='border-gray-300 pr-4 space-x-2 hover:text-blue-400 transition hidden sm:flex'
           >
-            <p className='font-medium text-base'>Restore</p>
+            <p className='font-medium text-base'>Сэргээх</p>
           </Link>
         </div>
       )}

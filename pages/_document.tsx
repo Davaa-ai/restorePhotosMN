@@ -3,7 +3,7 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang='en'>
+      <Html lang='mn'>
         <Head>
           <link rel='icon' href='/favicon.ico' />
           <meta
@@ -30,6 +30,9 @@ class MyDocument extends Document {
             name='twitter:image'
             content='https://restore-photos.vercel.app/og-image.png'
           />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet" />
         </Head>
         <body>
           <Main />

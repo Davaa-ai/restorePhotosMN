@@ -52,10 +52,10 @@ const Home: NextPage = () => {
         console.error('NSFW predictor threw an error', error);
       }
       if (!isSafe) {
-        return { errorMessage: 'Detected a NSFW image which is not allowed.' };
+        return { errorMessage: 'Зохимжгүй зураг илэрлээ, зөвшөөрөгдөхгүй.' };
       }
       if (data.remainingGenerations === 0) {
-        return { errorMessage: 'No more generations left for the day.' };
+        return { errorMessage: 'Өнөөдрийн эрх дууссан байна.' };
       }
       return undefined;
     },
@@ -129,8 +129,7 @@ const Home: NextPage = () => {
           />
           <div className='flex gap-3 flex-col py-3 sm:pr-4 pr-2'>
             <h3 className='text-left sm:text-md text-sm text-gray-700'>
-              Revolutionize your space with the world's first AI interior
-              designer, 100% free to try.{' '}
+              Өрөөгөө дэлхийн анхны хиймэл оюун ухаант интерьер дизайнераар өөрчил.{' '}
             </h3>
             <p className='text-left sm:text-sm text-xs text-gray-500 opacity-50 font-medium'>
               ROOMGPT.IO
@@ -138,19 +137,19 @@ const Home: NextPage = () => {
           </div>
         </a>
         <h1 className='mx-auto max-w-4xl font-display text-4xl font-bold tracking-normal text-slate-900 sm:text-6xl mb-5'>
-          Restore any face photo
+          Дурын нүүрний зургийг сэргээх
         </h1>
         {status === 'authenticated' && data && (
           <p className='text-slate-500'>
-            You have{' '}
+            Танд өнөөдөр{' '}
             <span className='font-semibold'>
-              {data.remainingGenerations} generations
+              {data.remainingGenerations} эрх
             </span>{' '}
-            left today. Your generation
-            {Number(data.remainingGenerations) > 1 ? 's' : ''} will renew in{' '}
+            үлдсэн байна. Таны эрх{' '}
             <span className='font-semibold'>
-              {data.hours} hours and {data.minutes} minutes.
-            </span>
+              {data.hours} цаг {data.minutes} минутын
+            </span>{' '}
+            дараа шинэчлэгдэнэ.
           </p>
         )}
         <div className='flex justify-between items-center w-full flex-col mt-4'>
@@ -184,9 +183,7 @@ const Home: NextPage = () => {
             !originalPhoto && (
               <div className='h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8'>
                 <div className='max-w-xl text-gray-600'>
-                  Sign in below with Google to create a free account and restore
-                  your photos today. You will be able to restore 2 photos per
-                  day for free.
+                  Доорх Google эрхээр нэвтэрч үнэгүй хаяг үүсгэн зургаа сэргээгээрэй. Та өдөрт 2 зураг үнэгүй сэргээх боломжтой.
                 </div>
                 <button
                   onClick={() => signIn('google')}
@@ -198,7 +195,7 @@ const Home: NextPage = () => {
                     height={20}
                     alt="google's logo"
                   />
-                  <span>Sign in with Google</span>
+                  <span>Google эрхээр нэвтрэх</span>
                 </button>
               </div>
             )
@@ -215,7 +212,7 @@ const Home: NextPage = () => {
           {restoredImage && originalPhoto && !sideBySide && (
             <div className='flex sm:space-x-4 sm:flex-row flex-col'>
               <div>
-                <h2 className='mb-1 font-medium text-lg'>Original Photo</h2>
+                <h2 className='mb-1 font-medium text-lg'>Эх зураг</h2>
                 <Image
                   alt='original photo'
                   src={originalPhoto}
@@ -225,7 +222,7 @@ const Home: NextPage = () => {
                 />
               </div>
               <div className='sm:mt-0 mt-8'>
-                <h2 className='mb-1 font-medium text-lg'>Restored Photo</h2>
+                <h2 className='mb-1 font-medium text-lg'>Сэргээсэн зураг</h2>
                 <a href={restoredImage} target='_blank' rel='noreferrer'>
                   <Image
                     alt='restored photo'
@@ -255,7 +252,7 @@ const Home: NextPage = () => {
               role='alert'
             >
               <div className='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
-                Please try again in 24 hours
+                24 цагийн дараа дахин оролдоно уу
               </div>
               <div className='border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700'>
                 {error}
@@ -273,7 +270,7 @@ const Home: NextPage = () => {
                 }}
                 className='bg-black rounded-full text-white font-medium px-4 py-2 mt-8 hover:bg-black/80 transition'
               >
-                Upload New Photo
+                Шинэ зураг оруулах
               </button>
             )}
             {restoredLoaded && (
@@ -283,7 +280,7 @@ const Home: NextPage = () => {
                 }}
                 className='bg-white rounded-full text-black border font-medium px-4 py-2 mt-8 hover:bg-gray-100 transition'
               >
-                Download Restored Photo
+                Сэргээсэн зургийг татах
               </button>
             )}
           </div>

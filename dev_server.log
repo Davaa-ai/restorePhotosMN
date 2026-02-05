@@ -1,0 +1,39 @@
+
+> dev
+> next dev
+
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/etc/credstore'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/etc/credstore.encrypted'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/home/ubuntu'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/opt/containerd'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/root/.launchpadlib'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/root/.ssh'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/run/containerd'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/run/docker'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/run/sudo'
+Watchpack Error (watcher): Error: EACCES: permission denied, watch '/tmp/systemd-private-8393954b4ef54800969994f58a388139-systemd-logind.service-GGS8bh'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/etc/credstore'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/etc/credstore.encrypted'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/home/ubuntu'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/opt/containerd'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/root/.launchpadlib'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/root/.ssh'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/run/containerd'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/run/docker'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/run/sudo'
+Watchpack Error (initial scan): Error: EACCES: permission denied, scandir '/tmp/systemd-private-8393954b4ef54800969994f58a388139-systemd-logind.service-GGS8bh'
+[32mready[39m - started server on 0.0.0.0:3000, url: http://localhost:3000
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[35mevent[39m - compiled client and server successfully in 1762 ms (204 modules)
+[36mwait[39m  - compiling...
+[35mevent[39m - compiled successfully in 165 ms (169 modules)
+[36mwait[39m  - compiling / (client and server)...
+[35mevent[39m - compiled client and server successfully in 361 ms (280 modules)
+[36mwait[39m  - compiling /api/auth/[...nextauth] (client and server)...
+[35mevent[39m - compiled successfully in 94 ms (105 modules)
+[next-auth][warn][NEXTAUTH_URL]
+https://next-auth.js.org/warnings#nextauth_url
+[next-auth][warn][NO_SECRET]
+https://next-auth.js.org/warnings#no_secret
