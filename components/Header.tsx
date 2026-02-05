@@ -20,7 +20,7 @@ export default function Header({ photo }: { photo?: string | undefined }) {
         <Image
           alt='Profile picture'
           src={photo}
-          className='w-10 rounded-full'
+          className='w-10 rounded-none border border-slate-200'
           width={32}
           height={28}
         />

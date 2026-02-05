@@ -95,10 +95,10 @@ export function Testimonials() {
                 {column.map((testimonial, testimonialIndex) => (
                   <li
                     key={testimonialIndex}
-                    className='hover:scale-105 transition duration-300 ease-in-out'
+                    className='hover:-translate-y-1 transition duration-300 ease-in-out'
                   >
                     <a href={testimonial.link} target='_blank' rel='noreferrer'>
-                      <figure className='relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10'>
+                      <figure className='relative bg-white p-6 shadow-sm border border-slate-200'>
                         <blockquote className='relative'>
                           <p className='text-lg tracking-tight text-slate-900'>
                             "{testimonial.content}"
@@ -113,7 +113,7 @@ export function Testimonials() {
                               {testimonial.author.role}
                             </div>
                           </div>
-                          <div className='overflow-hidden rounded-full bg-slate-50'>
+                          <div className='overflow-hidden bg-slate-50'>
                             <Image
                               className='h-14 w-14 object-cover'
                               src={testimonial.author.image}
