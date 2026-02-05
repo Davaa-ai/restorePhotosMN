@@ -1,76 +1,53 @@
-import * as tf from "@tensorflow/tfjs";
-import * as nsfwjs from "nsfwjs";
+import * as nsfwjs from 'nsfwjs';
 
-tf.enableProdMode();
+let model: nsfwjs.NSFWJS | null = null;
 
-class NSFWPredictor {
-  model: nsfwjs.NSFWJS | null = null;
-  constructor() {
-    this.model = null;
-    this.getModel();
+async function getModel() {
+  if (model) return model;
+  try {
+    // Attempt to load the model. If the default URL fails, this will throw.
+    model = await nsfwjs.load();
+  } catch (err) {
+    console.error("Failed to load NSFW model", err);
   }
-  async getModel() {
-    try {
-      this.model = await nsfwjs.load(
-        "https://nsfw-model-1.s3.us-west-2.amazonaws.com/nsfw-predict-model/",
-        // @ts-ignore
-        { type: "graph" }
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  predict(element: HTMLImageElement, guesses: number) {
-    if (!this.model) {
-      throw new Error("Some error occured, please try again later!");
-    }
-    return this.model.classify(element, guesses);
-  }
-
-  async predictImg(file: File, guesses = 5) {
-    const url = URL.createObjectURL(file);
-    try {
-      const img = document.createElement("img");
-      img.width = 400;
-      img.height = 400;
-
-      img.src = url;
-      return await new Promise<nsfwjs.predictionType[]>((res) => {
-        img.onload = async () => {
-          const results = await this.predict(img, guesses);
-          URL.revokeObjectURL(url);
-          res(results);
-        };
-      });
-    } catch (error) {
-      console.error(error);
-      URL.revokeObjectURL(url);
-      throw error;
-    }
-  }
-
-  async isSafeImg(file: File) {
-    try {
-      const predictions = await this.predictImg(file, 3);
-      const pornPrediction = predictions.find(
-        ({ className }) => className === "Porn"
-      );
-      const hentaiPrediction = predictions.find(
-        ({ className }) => className === "Hentai"
-      );
-
-      if (!pornPrediction || !hentaiPrediction) {
-        return true;
-      }
-      return !(
-        pornPrediction.probability > 0.25 || hentaiPrediction.probability > 0.25
-      );
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+  return model;
 }
 
-export default new NSFWPredictor();
+export async function isSafe(file: File): Promise<boolean> {
+  const model = await getModel();
+  if (!model) {
+    // Fail open if model cannot be loaded (e.g. network error, 404)
+    return true;
+  }
+
+  let url: string | null = null;
+  try {
+    url = URL.createObjectURL(file);
+    const img = document.createElement('img');
+    // Set dimensions to match what the model expects or to a reasonable size
+    img.width = 400;
+    img.height = 400;
+    img.src = url;
+
+    await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = (e) => reject(e);
+    });
+
+    const predictions = await model.classify(img, 3);
+    const pornPrediction = predictions.find(({ className }) => className === 'Porn');
+    const hentaiPrediction = predictions.find(({ className }) => className === 'Hentai');
+
+    const pornProb = pornPrediction ? pornPrediction.probability : 0;
+    const hentaiProb = hentaiPrediction ? hentaiPrediction.probability : 0;
+
+    // Threshold of 0.25 as used previously
+    return !(pornProb > 0.25 || hentaiProb > 0.25);
+
+  } catch (error) {
+    console.error('NSFW check failed', error);
+    return true; // Fail open on processing error
+  } finally {
+      if (url) URL.revokeObjectURL(url);
+  }
+}
