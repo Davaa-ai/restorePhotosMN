@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UrlBuilder } from '@bytescale/sdk';
 import {
   UploadWidgetConfig,
@@ -32,6 +32,29 @@ const Home: NextPage = () => {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, mutate } = useSWR('/api/remaining', fetcher);
   const { data: session, status } = useSession();
+  const [resetTime, setResetTime] = useState<{
+    hours: number;
+    minutes: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const updateResetTime = () => {
+      const now = new Date();
+      const nextReset = new Date();
+      nextReset.setUTCHours(19, 0, 0, 0);
+      if (nextReset <= now) {
+        nextReset.setUTCDate(nextReset.getUTCDate() + 1);
+      }
+      const diff = nextReset.getTime() - now.getTime();
+      const hours = Math.floor(diff / 1000 / 60 / 60);
+      const minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+      setResetTime({ hours, minutes });
+    };
+
+    updateResetTime();
+    const interval = setInterval(updateResetTime, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const options: UploadWidgetConfig = {
     apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
@@ -149,7 +172,9 @@ const Home: NextPage = () => {
             left today. Your generation
             {Number(data.remainingGenerations) > 1 ? 's' : ''} will renew in{' '}
             <span className='font-semibold'>
-              {data.hours} hours and {data.minutes} minutes.
+              {resetTime
+                ? `${resetTime.hours} hours and ${resetTime.minutes} minutes.`
+                : '...'}
             </span>
           </p>
         )}

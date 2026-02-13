@@ -23,14 +23,7 @@ export default async function handler(
 
   // it can return null and it also returns the number of generations the user has done, not the number they have left
 
-  // TODO: Move this using date-fns on the client-side
-  const resetDate = new Date();
-  resetDate.setHours(19, 0, 0, 0);
-  const diff = Math.abs(resetDate.getTime() - new Date().getTime());
-  const hours = Math.floor(diff / 1000 / 60 / 60);
-  const minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-
   const remainingGenerations = 2 - Number(usedGenerations);
 
-  return res.status(200).json({ remainingGenerations, hours, minutes });
+  return res.status(200).json({ remainingGenerations });
 }
